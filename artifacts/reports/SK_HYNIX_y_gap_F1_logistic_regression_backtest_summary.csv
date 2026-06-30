@@ -1,0 +1,2 @@
+﻿strategy,threshold,round_trip_cost,trade_days,win_rate,gross_total_return,net_total_return,always_in_gross_return,always_in_net_return,buy_hold_return,gross_max_drawdown,net_max_drawdown
+gap_proxy_open_to_close,0.5,0.0015,32,0.5625,0.06323142582592833,0.013423009736392544,0.4281046124364456,0.29982385585737603,1.7502590673575131,-0.08991228070175439,-0.09908513012814424

@@ -1,0 +1,5 @@
+﻿step,method,missing_ratio,purpose
+1. US/macro outer merge,Calendar union by Date,0.03184115276924127,미국/매크로 자산별 휴장일 차이 확인
+2. Holiday gap fill,Forward Fill,0.0002731680666530082,최근 확인 가능한 직전 시장값 유지
+3. KR-US time alignment,"merge_asof backward, exact date excluded",0.0,한국 거래일에 직전 미국 마감만 연결
+4. Rolling feature NaN,Train-only median imputer in Pipeline,0.0,초기 이동창 결측과 일부 잔여 결측 처리

@@ -1,0 +1,2 @@
+﻿strategy,threshold,round_trip_cost,trade_days,win_rate,gross_total_return,net_total_return,always_in_gross_return,always_in_net_return,buy_hold_return,gross_max_drawdown,net_max_drawdown
+daily_open_to_close,0.5,0.0015,10,0.7,0.03863589764728359,0.02321122185394331,0.4281046124364456,0.29982385585737603,1.7502590673575131,-0.05743095133713272,-0.059298582755778595

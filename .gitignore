@@ -1,0 +1,37 @@
+# Python cache / local env
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Local editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Large or non-deploy project data
+data/
+notebooks/
+*.ipynb
+*.pdf
+*.pptx
+*.txt
+
+# Keep only Streamlit app artifacts required by the dashboard
+artifacts/*
+!artifacts/models/
+!artifacts/models/**
+!artifacts/predictions/
+!artifacts/predictions/**
+!artifacts/reports/
+!artifacts/reports/**
+!artifacts/report_figures/
+!artifacts/report_figures/**
+!artifacts/report_supplement/
+!artifacts/report_supplement/**
+
+# Old duplicated report figures
+artifacts/report_figures - 1st/
+
