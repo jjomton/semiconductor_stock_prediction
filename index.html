@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Semiconductor Stock Direction Prediction MVP</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #5c667a;
+      --line: #d9dee8;
+      --blue: #2f4b7c;
+      --green: #2f7c5f;
+      --bg: #f6f8fb;
+      --panel: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans KR", "Malgun Gothic", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #172033 0%, #2f4b7c 58%, #2f7c5f 100%);
+      color: white;
+      padding: 72px 24px 56px;
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      opacity: .86;
+    }
+
+    h1 {
+      margin: 14px 0 18px;
+      max-width: 850px;
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 760px;
+      color: rgba(255,255,255,.88);
+      font-size: 19px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid rgba(255,255,255,.38);
+      border-radius: 6px;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      background: rgba(255,255,255,.12);
+    }
+
+    .btn.primary {
+      background: white;
+      color: #21375f;
+      border-color: white;
+    }
+
+    main {
+      padding: 34px 0 70px;
+    }
+
+    section {
+      margin-top: 24px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.cards {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(23,32,51,.05);
+    }
+
+    .metric {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--blue);
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 28px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+    }
+
+    th {
+      background: #edf2f8;
+      color: #26344d;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+    }
+
+    figcaption {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .note {
+      border-left: 4px solid var(--green);
+      background: #eef7f3;
+      padding: 16px 18px;
+      border-radius: 6px;
+    }
+
+    footer {
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      background: white;
+    }
+
+    @media (max-width: 820px) {
+      .grid.cards,
+      .grid.two {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="eyebrow">Deep Learning Class Project</div>
+      <h1>미국 반도체 시장 정보 기반 SK하이닉스 방향성 예측 MVP</h1>
+      <p class="lead">
+        한국 시장 개장 전에 확인 가능한 미국 반도체 종목, ETF, 시장 지표, 환율/금리 정보를 활용해
+        SK하이닉스의 다음 거래일 상승 여부를 예측하고 Streamlit 대시보드로 검증했습니다.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/jjomton/semiconductor_stock_prediction">GitHub Repository</a>
+        <a class="btn" href="https://youtu.be/TiGpb7cMYU8">YouTube Demo</a>
+        <a class="btn" href="#">Streamlit 링크 입력 예정</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="grid cards">
+      <div class="card">
+        <div class="metric">F1~F5</div>
+        <p>단계별 feature set 비교</p>
+      </div>
+      <div class="card">
+        <div class="metric">2 ML</div>
+        <p>Logistic Regression, Random Forest</p>
+      </div>
+      <div class="card">
+        <div class="metric">LSTM</div>
+        <p>수업 기반 시계열 딥러닝 모델</p>
+      </div>
+      <div class="card">
+        <div class="metric">3M</div>
+        <p>최근 3개월 hold-out 평가</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>문제 정의</h2>
+      <p>
+        미국 주식시장은 한국 시장보다 늦게 마감합니다. 따라서 한국 시장이 열리기 전,
+        미국 반도체 업종의 직전 마감 정보를 이미 확인할 수 있습니다.
+        이 프로젝트는 해당 정보가 SK하이닉스의 다음 거래일 방향성 예측에 도움이 되는지 검증합니다.
+      </p>
+      <ul>
+        <li><strong>y_gap</strong>: 다음 거래일 시가가 전일 종가보다 상승했는지 여부</li>
+        <li><strong>y_daily</strong>: 다음 거래일 종가가 전일 종가보다 상승했는지 여부</li>
+        <li><strong>y_intraday</strong>: 당일 종가가 당일 시가보다 상승했는지 여부</li>
+      </ul>
+    </section>
+
+    <section class="grid two">
+      <div class="card">
+        <h2>데이터</h2>
+        <ul>
+          <li>Target: SK하이닉스</li>
+          <li>US ETF: SOXX, SMH</li>
+          <li>US semiconductor stocks: NVDA, AMD, MU, INTC, AVGO, QCOM, AMAT, LRCX, KLAC</li>
+          <li>Market indicators: QQQ, SPY, VIX</li>
+          <li>FX / rates: USD/KRW, USD/JPY, Dollar Index, US 10Y</li>
+          <li>Korea indicators: KOSPI, KOSDAQ</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>검증 설계</h2>
+        <ul>
+          <li>한국 거래일 기준으로 미국 직전 마감 데이터 매칭</li>
+          <li>미래 정보가 섞이지 않도록 `merge_asof` backward 정렬</li>
+          <li>Scaler와 imputer는 train set 기준으로만 fit</li>
+          <li>최근 3개월 구간을 최종 hold-out test로 사용</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Feature Set</h2>
+      <table>
+        <thead>
+          <tr><th>Feature Set</th><th>구성</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>F1</td><td>미국 반도체 ETF</td></tr>
+          <tr><td>F2</td><td>F1 + 미국 반도체 주요 종목</td></tr>
+          <tr><td>F3</td><td>F2 + 미국 시장지표 및 VIX</td></tr>
+          <tr><td>F4</td><td>F3 + 환율/금리</td></tr>
+          <tr><td>F5</td><td>F4 + 한국 시장 및 타깃 종목 과거 흐름</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>모델 성능 비교</h2>
+      <figure>
+        <img src="artifacts/report_figures/01_model_comparison_auc.png" alt="ML 모델 ROC-AUC 비교">
+        <figcaption>F1~F5 feature set별 Logistic Regression / Random Forest ROC-AUC 비교</figcaption>
+      </figure>
+    </section>
+
+    <section class="grid two">
+      <div class="card">
+        <h2>y_gap 백테스트</h2>
+        <figure>
+          <img src="artifacts/report_figures/02_gap_backtest_equity.png" alt="y_gap 백테스트 수익 곡선">
+          <figcaption>예측 신호 기반 전략과 buy-and-hold 비교</figcaption>
+        </figure>
+      </div>
+      <div class="card">
+        <h2>LSTM 학습 결과</h2>
+        <figure>
+          <img src="artifacts/report_figures/04_lstm_training_history.png" alt="LSTM 학습 곡선">
+          <figcaption>기본 LSTM의 train/validation loss 및 AUC 흐름</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="grid two">
+      <div class="card">
+        <h2>전처리 프로토콜</h2>
+        <figure>
+          <img src="artifacts/report_supplement/09_preprocessing_protocol.png" alt="전처리 프로토콜">
+          <figcaption>Forward Fill, merge_asof, train-only median imputer 적용</figcaption>
+        </figure>
+      </div>
+      <div class="card">
+        <h2>변수 중요도</h2>
+        <figure>
+          <img src="artifacts/report_supplement/10_rf_feature_importance.png" alt="RandomForest 변수 중요도">
+          <figcaption>최종 best 모델이 아닌 해석용 RandomForest 보조 모델 기반 변수 중요도</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>LSTM Ablation</h2>
+      <figure>
+        <img src="artifacts/report_supplement/11_lstm_regularized_ablation.png" alt="LSTM ablation 결과">
+        <figcaption>L2 regularization, BatchNormalization, Dropout 강화 실험</figcaption>
+      </figure>
+    </section>
+
+    <section class="note">
+      <h2>핵심 결론</h2>
+      <p>
+        미국 반도체 마감 정보는 SK하이닉스의 다음 거래일 방향성에 일부 신호를 제공했습니다.
+        다만 단독으로 안정적인 매매 전략을 만들기에는 한계가 있었고, 금융 시계열에서는
+        모델 복잡도보다 데이터 정렬, 누수 방지, 검증 설계가 중요했습니다.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Semiconductor Stock Direction Prediction MVP · Streamlit, scikit-learn, TensorFlow/Keras, pandas
+    </div>
+  </footer>
+</body>
+</html>

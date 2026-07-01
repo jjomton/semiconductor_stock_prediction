@@ -18,6 +18,8 @@ notebooks/
 *.pdf
 *.pptx
 *.txt
+*.zip
+변영진_딥러닝프로젝트/
 
 # Keep only Streamlit app artifacts required by the dashboard
 artifacts/*
@@ -34,4 +36,3 @@ artifacts/*
 
 # Old duplicated report figures
 artifacts/report_figures - 1st/
-
